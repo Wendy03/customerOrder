@@ -35,7 +35,7 @@ new Vue({
       },
       isLoading: false,
       cart: {},
-      cartTotal: 0,
+      cartTotal: 1,
       form: {
         email: '',
         name: '',
@@ -77,7 +77,7 @@ new Vue({
         .get(url)
         .then((res) => {
           vm.product = res.data.data;
-          this.$set(vm.product, 'num', 0);
+          this.$set(vm.product, 'num', 1);
           $('#productModal').modal('show');
           vm.status.loadingItem = '';
         })

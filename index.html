@@ -106,11 +106,12 @@
                           {{ item.product.title }}
                         </td>
                         <td class="align-middle">
-                          <div class="input-group" v-if="item.quantity < 5">
+                          <div class="input-group">
                             <div class="input-group-prepend">
                               <button
                                 class="btn btn-outline-primary"
                                 @click="quantityUpdate(item.product.id, item.quantity + 1)"
+                                :disabled="item.quantity === 5"
                               >
                                 +
                               </button>
@@ -121,14 +122,13 @@
                               class="form-control text-center"
                               :value="item.quantity"
                               @keyup.enter="quantityUpdate(item.product.id, $event.target.value)"
+                              disabled
                             />
-                            <div
-                              class="input-group-append"
-                              v-if="item.quantity > 1"
-                            >
+                            <div class="input-group-append">
                               <button
                                 class="btn btn-outline-primary"
                                 @click="quantityUpdate(item.product.id, item.quantity - 1)"
+                                :disabled="item.quantity === 1"
                               >
                                 -
                               </button>
@@ -424,8 +424,9 @@
                   </div>
                   <!-- 付款方式-->
                   <div class="form-group">
-                    <label for="message">付款方式</label>
+                    <label for="payment">付款方式</label>
                     <select
+                      id="payment"
                       v-model="form.payment"
                       class="form-control"
                       required
@@ -463,8 +464,8 @@
                       name="comment"
                       id="comment"
                       class="form-control"
-                      cols="30"
-                      rows="10"
+                      cols="10"
+                      rows="7"
                       v-model="form.message"
                     ></textarea>
                   </div>
