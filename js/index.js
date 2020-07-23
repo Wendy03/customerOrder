@@ -35,7 +35,7 @@ new Vue({
       apiPath: 'https://course-ec-api.hexschool.io/api',
       products: [],
       product: {
-        num: 0,
+        num: 1,
       },
       pagination: {},
       status: {

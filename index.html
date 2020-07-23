@@ -290,9 +290,6 @@
                 NT {{ product.price }} 元
               </div>
               <select name="" class="form-control mt-3" v-model="product.num">
-                <option value="0" disabled selected>
-                  請選擇數量
-                </option>
                 <option :value="num" v-for="num in 5" :key="num">
                   {{ num }} {{ product.unit }}
                 </option>
