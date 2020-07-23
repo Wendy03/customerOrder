@@ -19,6 +19,14 @@ VeeValidate.configure({
 });
 VeeValidate.localize('tw', zh);
 
+const Toast = Swal.mixin({
+  toast: true,
+  showConfirmButton: false,
+  timer: 1500,
+  padding: '1em',
+  position: 'top',
+});
+
 new Vue({
   el: '#app',
   data() {
@@ -34,14 +42,14 @@ new Vue({
         loadingItem: '',
       },
       isLoading: false,
-      cart: {},
-      cartTotal: 1,
+      cart: [],
+      cartTotal: 0,
       form: {
         email: '',
         name: '',
         tel: '',
         address: '',
-        payment: '',
+        payment: 'WebATM',
         message: '',
       },
     };
@@ -108,26 +116,18 @@ new Vue({
           vm.status.loadingItem = '';
           $('#productModal').modal('hide');
           vm.getCart();
-          Swal.fire({
-            toast: true,
-            text: '已加入購物車',
+          Toast.fire({
+            title: '已加入購物車',
             icon: 'success',
-            showConfirmButton: false,
-            timer: 1500,
-            padding: '2em',
           });
         })
         .catch((err) => {
           this.status.loadingItem = '';
           console.log(err.response.data.errors);
           $('#productModal').modal('hide');
-          Swal.fire({
-            toast: true,
-            text: `${err.response.data.errors}`,
+          Toast.fire({
+            title: `${err.response.data.errors}`,
             icon: 'warning',
-            showConfirmButton: false,
-            timer: 1500,
-            padding: '2em',
           });
         });
     },
@@ -156,13 +156,9 @@ new Vue({
         .patch(url, cart)
         .then(() => {
           vm.getCart();
-          Swal.fire({
-            toast: true,
+          Toast.fire({
             text: '商品已更正數量',
             icon: 'success',
-            showConfirmButton: false,
-            timer: 1500,
-            padding: '2em',
           });
         })
         .catch((err) => {
@@ -178,24 +174,16 @@ new Vue({
         .then((res) => {
           vm.isLoading = false;
           vm.getCart();
-          Swal.fire({
-            toast: true,
+          Toast.fire({
             text: '商品已刪除',
             icon: 'success',
-            showConfirmButton: false,
-            timer: 1500,
-            padding: '2em',
           });
         })
         .catch((err) => {
           console.log(err);
-          Swal.fire({
-            toast: true,
+          Toast.fire({
             text: '商品刪除失敗',
             icon: 'error',
-            showConfirmButton: false,
-            timer: 1500,
-            padding: '2em',
           });
         });
     },
@@ -209,24 +197,16 @@ new Vue({
           vm.isLoading = false;
           vm.getCart();
           vm.cartTotal = 0;
-          Swal.fire({
-            toast: true,
+          Toast.fire({
             text: '商品已全部刪除',
             icon: 'success',
-            showConfirmButton: false,
-            timer: 1500,
-            padding: '2em',
           });
         })
         .catch((err) => {
           console.log(err);
-          Swal.fire({
-            toast: true,
+          Toast.fire({
             text: '商品刪除失敗',
             icon: 'error',
-            showConfirmButton: false,
-            timer: 1500,
-            padding: '2em',
           });
         });
     },
@@ -240,10 +220,8 @@ new Vue({
         vm.isLoading = false;
         Swal.fire({
           toast: true,
-          text: '訂單完成',
+          text: '訂單完成，感謝訂購',
           icon: 'success',
-          showConfirmButton: false,
-          timer: 2500,
           padding: '2em',
         });
         $('#orderModal').modal('hide');
